@@ -7,6 +7,11 @@ namespace UserManagementApp.Data.Providers
     {
         private readonly List<User> _users = new List<User>();
 
+        public InMemoryDataProvider()
+        {
+            InitializeTestData();
+        }
+
         public IEnumerable<User> GetAllUsers() => _users.ToList();
 
         public User GetUserById(Guid id) =>
@@ -38,6 +43,33 @@ namespace UserManagementApp.Data.Providers
                 throw new ArgumentException("User not found.");
 
             _users.Remove(user);
+        }
+
+        private void InitializeTestData()
+        {
+            _users.Add(new User
+            {
+                Id = Guid.NewGuid(),
+                Login = "admin",
+                FirstName = "Admin",
+                LastName = "User"
+            });
+
+            _users.Add(new User
+            {
+                Id = Guid.NewGuid(),
+                Login = "john.doe",
+                FirstName = "John",
+                LastName = "Doe"
+            });
+
+            _users.Add(new User
+            {
+                Id = Guid.NewGuid(),
+                Login = "jane.doe",
+                FirstName = "Jane",
+                LastName = "Doe"
+            });
         }
         private void ValidateUser(User user, bool isNew)
         {
